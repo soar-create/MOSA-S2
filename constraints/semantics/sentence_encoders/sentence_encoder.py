@@ -94,7 +94,7 @@ class SentenceEncoder(Constraint, ABC):
         )
         """
         starting_text_window = starting_text.text
-        #starting_text_window = starting_text.hypothesistext
+        #starting_text_window = starting_text.hypothesistext #only compute the semantic similarity of hypothesistext before and after attacks
         transformed_text_window = transformed_text.text
         #transformed_text_window = transformed_text.hypothesistext
         starting_embedding, transformed_embedding = self.encode(

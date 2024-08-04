@@ -57,7 +57,7 @@ HUGGINGFACE_DATASET_BY_MODEL = {
         None,
         5.0,
     ),
-    "distilbert-base-uncased-ag-news": ("ag_news", None, "test"),
+    "distilbert-base-uncased-ag-news": ("ag_news", None, "train"),
     "distilbert-base-uncased-cola": ("glue", "cola", "validation"),
     "distilbert-base-uncased-imdb": ("imdb", None, "test"),
     "distilbert-base-uncased-mnli": (
@@ -75,7 +75,7 @@ HUGGINGFACE_DATASET_BY_MODEL = {
     #
     # roberta-base (RoBERTa is cased by default)
     #
-    "roberta-base-ag-news": ("ag_news", None, "test"),
+    "roberta-base-ag-news": ("ag_news", None, "train"),
     "roberta-base-cola": ("glue", "cola", "validation"),
     "roberta-base-imdb": ("imdb", None, "test"),
     "roberta-base-mr": ("rotten_tomatoes", None, "train"),
@@ -88,7 +88,7 @@ HUGGINGFACE_DATASET_BY_MODEL = {
     #
     # albert-base-v2 (ALBERT is cased by default)
     #
-    "albert-base-v2-ag-news": ("ag_news", None, "test"),
+    "albert-base-v2-ag-news": ("ag_news", None, "train"),
     "albert-base-v2-cola": ("glue", "cola", "validation"),
     "albert-base-v2-imdb": ("imdb", None, "test"),
     "albert-base-v2-mr": ("rotten_tomatoes", None, "train"),
@@ -127,7 +127,7 @@ TEXTATTACK_DATASET_BY_MODEL = {
     #
     # LSTMs
     #
-    "lstm-ag-news": ("ag_news", None, "test"),
+    "lstm-ag-news": ("ag_news", None, "train"),
     "lstm-imdb": ("imdb", None, "test"),
     "lstm-mr": ("rotten_tomatoes", None, "train"),
     "lstm-sst2": ("glue", "sst2", "train"),
@@ -135,7 +135,7 @@ TEXTATTACK_DATASET_BY_MODEL = {
     #
     # CNNs
     #
-    "cnn-ag-news": ("ag_news", None, "test"),
+    "cnn-ag-news": ("ag_news", None, "train"),
     "cnn-imdb": ("imdb", None, "test"),
     "cnn-mr": ("rotten_tomatoes", None, "train"),
     "cnn-sst2": ("glue", "sst2", "train"),

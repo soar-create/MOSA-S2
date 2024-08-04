@@ -1,6 +1,6 @@
 """
 
-goal function result class
+GoalFunctionResult class
 ====================================
 
 """
@@ -8,6 +8,8 @@ goal function result class
 from abc import ABC, abstractmethod
 
 import torch
+
+from textattack.shared import utils
 
 
 class GoalFunctionResultStatus:
@@ -32,6 +34,8 @@ class GoalFunctionResult(ABC):
 
     def __init__(
         self,
+        dominatedSolutions,
+        dominationCount,
         attacked_text,
         raw_output,
         output,
@@ -39,6 +43,7 @@ class GoalFunctionResult(ABC):
         score,
         num_queries,
         ground_truth_output,
+        goal_function_result_type="",
     ):
         self.attacked_text = attacked_text
         self.raw_output = raw_output
@@ -47,12 +52,33 @@ class GoalFunctionResult(ABC):
         self.goal_status = goal_status
         self.num_queries = num_queries
         self.ground_truth_output = ground_truth_output
+        self.goal_function_result_type = goal_function_result_type
+        self.dominatedSolutions=[]
+        self.dominationCount=0
 
         if isinstance(self.raw_output, torch.Tensor):
             self.raw_output = self.raw_output.numpy()
 
         if isinstance(self.score, torch.Tensor):
             self.score = self.score.item()
+
+    def __repr__(self):
+        main_str = "GoalFunctionResult( "
+        lines = []
+        lines.append(
+            utils.add_indent(
+                f"(goal_function_result_type): {self.goal_function_result_type}", 2
+            )
+        )
+        lines.append(utils.add_indent(f"(attacked_text): {self.attacked_text.text}", 2))
+        lines.append(
+            utils.add_indent(f"(ground_truth_output): {self.ground_truth_output}", 2)
+        )
+        lines.append(utils.add_indent(f"(model_output): {self.output}", 2))
+        lines.append(utils.add_indent(f"(score): {self.score}", 2))
+        main_str += "\n  " + "\n  ".join(lines) + "\n"
+        main_str += ")"
+        return main_str
 
     @abstractmethod
     def get_text_color_input(self):

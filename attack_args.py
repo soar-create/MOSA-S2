@@ -36,7 +36,7 @@ ATTACK_RECIPE_NAMES = {
     "pso": "textattack.attack_recipes.PSOZang2020",
     "checklist": "textattack.attack_recipes.CheckList2020",
     "clare": "textattack.attack_recipes.CLARE2020",
-    "agps": "textattack.attack_recipes.AGPS2023",
+    "mosa-s2": "textattack.attack_recipes.MOSAS2Li2023",
 }
 
 

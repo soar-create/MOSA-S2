@@ -114,8 +114,8 @@ class AttackLogManager:
                     
                 confidence_score[i]=result.original_result.raw_output.max()
                 confidence_score_output[i]=result.perturbed_result.raw_output.max()
-                
-                all_semantic_score[i]=use._sim_score(result.original_result.attacked_text,result.perturbed_result.attacked_text)
+                if result.perturbed_result!=result.original_result:
+                    all_semantic_score[i]=use._sim_score(result.original_result.attacked_text,result.perturbed_result.attacked_text)
 
             if isinstance(result, FailedAttackResult):
                 failed_attacks += 1
@@ -180,6 +180,7 @@ class AttackLogManager:
         perturbed_word_percentages = perturbed_word_percentages[
             perturbed_word_percentages > 0
         ]
+        #print(perturbed_word_percentages)
         average_perc_words_perturbed = perturbed_word_percentages.mean()
         average_perc_words_perturbed = str(round(average_perc_words_perturbed, 2)) + "%"
             
@@ -193,7 +194,7 @@ class AttackLogManager:
         average_num_words_output = sum(all_num_words_output)/len(np.nonzero(all_num_words_output)[0])
         average_num_words_output = str(round(average_num_words_output, 5))
         
-        
+        #print(all_semantic_score)
         average_semantic_score = sum(all_semantic_score)/len(np.nonzero(all_semantic_score)[0])
         average_semantic_score = str(round(average_semantic_score, 5))
 

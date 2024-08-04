@@ -1,3 +1,10 @@
+""".. _goal_function:
+
+GoalFunction Class
+===========================================================
+"""
+
+
 from abc import ABC, abstractmethod
 
 import lru
@@ -8,10 +15,10 @@ from textattack.goal_function_results.goal_function_result import (
     GoalFunctionResultStatus,
 )
 from textattack.shared import validators
-from textattack.shared.utils import default_class_repr
+from textattack.shared.utils import ReprMixin
 
 
-class GoalFunction(ABC):
+class GoalFunction(ReprMixin, ABC):
     """Evaluates how well a perturbed attacked_text object is achieving a
     specified goal.
 
@@ -33,7 +40,7 @@ class GoalFunction(ABC):
         use_cache=True,
         query_budget=float("inf"),
         model_batch_size=32,
-        model_cache_size=2 ** 20,
+        model_cache_size=2**20,
     ):
         validators.validate_model_goal_function_compatibility(
             self.__class__, model_wrapper.model.__class__
@@ -43,6 +50,8 @@ class GoalFunction(ABC):
         self.use_cache = use_cache
         self.query_budget = query_budget
         self.batch_size = model_batch_size
+        self.dominatedSolutions=[]
+        self.dominationCount=0
         if self.use_cache:
             self._call_model_cache = lru.LRU(model_cache_size)
         else:
@@ -95,6 +104,8 @@ class GoalFunction(ABC):
             goal_function_score = self._get_score(raw_output, attacked_text)
             results.append(
                 self._goal_function_result_type()(
+                    self.dominatedSolutions,
+                    self.dominationCount,
                     attacked_text,
                     raw_output,
                     displayed_output,
@@ -102,6 +113,7 @@ class GoalFunction(ABC):
                     goal_function_score,
                     self.num_queries,
                     self.ground_truth_output,
+
                 )
             )
         return results, self.num_queries == self.query_budget
@@ -230,5 +242,3 @@ class GoalFunction(ABC):
         self.__dict__ = state
         if self.use_cache:
             self._call_model_cache = lru.LRU(state["_call_model_cache"])
-
-    __repr__ = __str__ = default_class_repr

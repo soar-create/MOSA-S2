@@ -31,13 +31,16 @@ class Rubbishexample(ClassificationGoalFunction):
         cur_words = attacked_text.words
         initial_words = self.initial_attacked_text.words
         initial_num_words=self.initial_attacked_text.num_words
-        if self.ground_truth_output != model_output.argmax():
-            return 0
+        
         if (model_output.numel() == 1) and isinstance(self.ground_truth_output, float):
             return abs(model_output.item() - self.ground_truth_output)
+    
+        elif self.ground_truth_output != model_output.argmax():
+            return [0.0,0.0]
         else:
-            num_words_score = len(set(cur_words)-set(initial_words))
-            model_score = model_output[self.ground_truth_output]
-            SCORE=((num_words_score + 2.5*model_score) / initial_num_words)*10000
+            num_words_score = (len(set(cur_words)-set(initial_words))/initial_num_words)*10000
+            model_score = (model_output[self.ground_truth_output]/ initial_num_words)*10000
+            SCORE=[num_words_score,model_score]
             return SCORE
+   
             

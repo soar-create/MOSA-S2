@@ -39,4 +39,4 @@ from .pruthi_2019 import Pruthi2019
 from .pso_zang_2020 import PSOZang2020
 from .checklist_ribeiro_2020 import CheckList2020
 from .clare_li_2020 import CLARE2020
-from .agps_2023 import AGPS2023
+from .mosa_s2_2023 import MOSAS2Li2023
